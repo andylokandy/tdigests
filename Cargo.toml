@@ -1,6 +1,6 @@
 [package]
 name = "tdigests"
-version = "0.1.0"
+version = "0.1.1"
 
 description = "An efficient Rust implementation of the t-digest algorithm."
 edition = "2021"
