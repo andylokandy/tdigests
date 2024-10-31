@@ -277,7 +277,7 @@ impl TDigest {
         let mut merged = Vec::with_capacity(max_centroids);
 
         // Put min centroids back
-        merged.insert(0, min);
+        merged.push(min);
 
         // Min and max centroids take up two slots
         let max_centroids = max_centroids - 2;
