@@ -1,0 +1,19 @@
+[package]
+name = "tdigests"
+version = "0.1.0"
+
+description = "An efficient Rust implementation of the t-digest algorithm."
+edition = "2021"
+keywords = ["tdigest", "t-digest", "quantile", "percentile", "approximate"]
+license = "MIT"
+repository = "https://github.com/andylokandy/tdigests"
+rust-version = "1.75.0"
+
+[dev-dependencies]
+divan = "0.1"
+pretty_assertions = "1.4"
+rand = "0.8"
+
+[[bench]]
+harness = false
+name = "benchmarks"

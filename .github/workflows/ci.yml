@@ -1,0 +1,48 @@
+name: Unit Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest, macos-latest, ubuntu-latest ]
+        rust: [ "1.75", stable, nightly ]
+    env:
+      RUST_BACKTRACE: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+          components: rustfmt, clippy
+
+      - name: Check format
+        if: ${{ matrix.rust == 'nightly' }}
+        run: cargo fmt --all -- --check
+
+      - name: Check clippy
+        if: ${{ matrix.rust == 'nightly' }}
+        run: cargo clippy -- --deny warnings
+
+      - name: Build
+        run: cargo build
+
+      - name: Run tests
+        run: |
+          cargo test -- --nocapture
+
+      - name: Run examples
+        run: |
+          cargo run --example accuracy
+          cargo run --example simple
