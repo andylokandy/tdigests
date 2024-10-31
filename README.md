@@ -2,7 +2,7 @@
 
 [![Crates.io](https://img.shields.io/crates/v/tdigests)](https://crates.io/crates/tdigests)
 [![Docs.rs](https://docs.rs/tdigests/badge.svg)](https://docs.rs/tdigests)
-![License](https://img.shields.io/crates/l/tdigests)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An efficient Rust implementation of the [t-digest algorithm](https://github.com/tdunning/t-digest), which allows accurate estimation of quantiles and relative rank over streaming data.
 
