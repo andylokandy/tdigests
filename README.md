@@ -20,7 +20,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-tdigests = 0.1
+tdigests = 1.0
 ```
 
 ## Usage
