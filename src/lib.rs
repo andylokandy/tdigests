@@ -113,7 +113,7 @@ impl TDigest {
     ///
     /// # Panics
     ///
-    /// Panics if the input values are empty.
+    /// Panics if the input values are empty or if all values are `NaN`.
     ///
     /// # Examples
     ///
@@ -123,7 +123,9 @@ impl TDigest {
     /// let values = vec![3.0, 1.0, 2.0];
     /// let digest = TDigest::from_values(values);
     /// ```
-    pub fn from_values(values: Vec<f64>) -> Self {
+    pub fn from_values(mut values: Vec<f64>) -> Self {
+        values.retain(|v| !v.is_nan());
+
         assert!(!values.is_empty());
 
         if values.len() == 1 {
@@ -166,7 +168,8 @@ impl TDigest {
     ///
     /// # Panics
     ///
-    /// Panics if the input centroids is empty or if all centroids have zero weight.
+    /// Panics if the input centroids is empty or if all centroids have either zero weight or `NaN`
+    /// means.
     ///
     /// # Examples
     ///
@@ -392,11 +395,11 @@ impl TDigest {
     /// ```
     pub fn estimate_rank(&self, x: f64) -> f64 {
         if self.centroids.len() == 1 {
-            match self.centroids[0].mean.partial_cmp(&x).unwrap() {
-                Ordering::Less => return 1.0,
-                Ordering::Equal => return 0.5,
-                Ordering::Greater => return 0.0,
-            }
+            return match self.centroids[0].mean.partial_cmp(&x).unwrap() {
+                Ordering::Less => 1.0,
+                Ordering::Equal => 0.5,
+                Ordering::Greater => 0.0,
+            };
         }
 
         let total_weight = self.total_weight();
